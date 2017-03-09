@@ -17,7 +17,7 @@ const todos = (state = [], action) => {
         if (element.todoId === action.todoId) {
           return {
             ...element,
-            completed: !element.completed
+            isBeingEdited: true
           };
         } else {
           return element;
