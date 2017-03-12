@@ -6,43 +6,41 @@ const todos = (state = [], action) => {
         {
           todoId: action.todoId,
           text: action.text,
-          completed: false,
-          isBeingEdited: false
+          completed: false
         }
       ];
+
+    case 'EDIT_TODO':
+      return state.map(
+        element =>
+          element.todoId === action.todoId
+            ? { ...element, text: action.text }
+            : element
+      );
+
     case 'REMOVE_TODO':
       return state.filter(item => item.todoId !== action.todoId);
-    case 'SET_EDITING_FLAG':
-      return state.map(element => {
-        if (element.todoId === action.todoId) {
-          return {
-            ...element,
-            isBeingEdited: true
-          };
-        } else {
-          return element;
-        }
-      });
+
     case 'TOGGLE_TODO':
-      return state.map(element => {
-        if (element.todoId === action.todoId) {
-          return {
-            ...element,
-            completed: !element.completed
-          };
-        } else {
-          return element;
-        }
-      });
+      return state.map(
+        element =>
+          element.todoId === action.todoId
+            ? { ...element, completed: !element.completed }
+            : element
+      );
+
     case 'FINISH_ALL_TODOS':
-      return state.map(element => {
-        return {
-          ...element,
-          completed: true
-        };
-      });
+      const areAllTodosDone = state.every(
+        element => element.completed
+      );
+      return state.map(element => ({
+        ...element,
+        completed: !areAllTodosDone
+      }));
+
     case 'CLEAR_COMPLETED_TODOS':
       return state.filter(element => !element.completed);
+
     default:
       return state;
   }

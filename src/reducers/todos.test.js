@@ -6,58 +6,21 @@ import {
   finishAllTodos,
   clearCompletedTodos,
   removeTodo,
-  setEditingFlag
+  editTodo
 } from '../actions';
 
 describe('toggling props', () => {
-  test("'editing' flag is set properly when false", () => {
-    const stateBefore = [
-      {
-        todoId: 'test-uuid',
-        text: 'test-text',
-        completed: true,
-        isBeingEdited: false
-      },
-      {
-        todoId: 'test-uuid-2',
-        text: 'test-text',
-        completed: true,
-        isBeingEdited: false
-      }
-    ];
-
-    deepFreeze(stateBefore);
-
-    const stateAfter = [
-      {
-        todoId: 'test-uuid',
-        text: 'test-text',
-        completed: true,
-        isBeingEdited: true
-      },
-      {
-        todoId: 'test-uuid-2',
-        text: 'test-text',
-        completed: true,
-        isBeingEdited: false
-      }
-    ];
-    expect(todos(stateBefore, setEditingFlag('test-uuid'))).toEqual(stateAfter);
-  });
-
   test("toggles a todo 'completed' state properly", () => {
     const stateBefore = [
       {
         todoId: '0',
         text: 'test',
-        completed: false,
-        isBeingEdited: false
+        completed: false
       },
       {
         todoId: '1',
         text: 'test',
-        completed: false,
-        isBeingEdited: false
+        completed: false
       }
     ];
 
@@ -65,14 +28,12 @@ describe('toggling props', () => {
       {
         todoId: '0',
         text: 'test',
-        completed: false,
-        isBeingEdited: false
+        completed: false
       },
       {
         todoId: '1',
         text: 'test',
-        completed: true,
-        isBeingEdited: false
+        completed: true
       }
     ];
 
@@ -86,26 +47,22 @@ describe('toggling props', () => {
       {
         todoId: '0',
         text: 'test',
-        completed: false,
-        isBeingEdited: false
+        completed: false
       },
       {
         todoId: '1',
         text: 'test',
-        completed: true,
-        isBeingEdited: false
+        completed: true
       },
       {
         todoId: '2',
         text: 'test',
-        completed: false,
-        isBeingEdited: false
+        completed: false
       },
       {
         todoId: '3',
         text: 'test',
-        completed: true,
-        isBeingEdited: false
+        completed: true
       }
     ];
 
@@ -115,31 +72,81 @@ describe('toggling props', () => {
       {
         todoId: '0',
         text: 'test',
-        completed: true,
-        isBeingEdited: false
+        completed: true
       },
       {
         todoId: '1',
         text: 'test',
-        completed: true,
-        isBeingEdited: false
+        completed: true
       },
       {
         todoId: '2',
         text: 'test',
-        completed: true,
-        isBeingEdited: false
+        completed: true
       },
       {
         todoId: '3',
         text: 'test',
-        completed: true,
-        isBeingEdited: false
+        completed: true
       }
     ];
 
     expect(todos(stateBefore, finishAllTodos())).toEqual(stateAfter);
   });
+});
+
+describe('editing items', () => {
+  const stateBefore = [
+    {
+      todoId: '0',
+      text: 'test',
+      completed: false
+    },
+    {
+      todoId: '1',
+      text: 'test',
+      completed: true
+    },
+    {
+      todoId: '2',
+      text: 'test',
+      completed: false
+    },
+    {
+      todoId: '3',
+      text: 'test',
+      completed: true
+    }
+  ];
+
+  deepFreeze(stateBefore);
+
+  const stateAfter = [
+    {
+      todoId: '0',
+      text: 'changed test text',
+      completed: false
+    },
+    {
+      todoId: '1',
+      text: 'test',
+      completed: true
+    },
+    {
+      todoId: '2',
+      text: 'test',
+      completed: false
+    },
+    {
+      todoId: '3',
+      text: 'test',
+      completed: true
+    }
+  ];
+
+  expect(
+    todos(stateBefore, editTodo('0', 'changed test text'))
+  ).toEqual(stateAfter);
 });
 
 describe('adding / removing items', () => {
@@ -148,8 +155,7 @@ describe('adding / removing items', () => {
       {
         todoId: 'test-uuid',
         text: 'test-text',
-        completed: true,
-        isBeingEdited: false
+        completed: true
       }
     ];
 
@@ -158,8 +164,7 @@ describe('adding / removing items', () => {
     expect(todos(stateBefore, addTodo('test'))).toContainEqual({
       todoId: expect.any(String),
       text: 'test',
-      completed: false,
-      isBeingEdited: false
+      completed: false
     });
 
     expect(todos(stateBefore, addTodo('test'))).toHaveLength(2);
@@ -170,26 +175,22 @@ describe('adding / removing items', () => {
       {
         todoId: '0',
         text: 'test',
-        completed: false,
-        isBeingEdited: false
+        completed: false
       },
       {
         todoId: '1',
         text: 'test',
-        completed: true,
-        isBeingEdited: false
+        completed: true
       },
       {
         todoId: '2',
         text: 'test',
-        completed: false,
-        isBeingEdited: false
+        completed: false
       },
       {
         todoId: '3',
         text: 'test',
-        completed: true,
-        isBeingEdited: false
+        completed: true
       }
     ];
 
@@ -199,20 +200,17 @@ describe('adding / removing items', () => {
       {
         todoId: '0',
         text: 'test',
-        completed: false,
-        isBeingEdited: false
+        completed: false
       },
       {
         todoId: '1',
         text: 'test',
-        completed: true,
-        isBeingEdited: false
+        completed: true
       },
       {
         todoId: '3',
         text: 'test',
-        completed: true,
-        isBeingEdited: false
+        completed: true
       }
     ];
 
@@ -224,26 +222,22 @@ describe('adding / removing items', () => {
       {
         todoId: '0',
         text: 'test',
-        completed: false,
-        isBeingEdited: false
+        completed: false
       },
       {
         todoId: '1',
         text: 'test',
-        completed: true,
-        isBeingEdited: false
+        completed: true
       },
       {
         todoId: '2',
         text: 'test',
-        completed: false,
-        isBeingEdited: false
+        completed: false
       },
       {
         todoId: '3',
         text: 'test',
-        completed: true,
-        isBeingEdited: false
+        completed: true
       }
     ];
 
@@ -253,18 +247,18 @@ describe('adding / removing items', () => {
       {
         todoId: '0',
         text: 'test',
-        completed: false,
-        isBeingEdited: false
+        completed: false
       },
       {
         todoId: '2',
         text: 'test',
-        completed: false,
-        isBeingEdited: false
+        completed: false
       }
     ];
 
-    expect(todos(stateBefore, clearCompletedTodos())).toEqual(stateAfter);
+    expect(todos(stateBefore, clearCompletedTodos())).toEqual(
+      stateAfter
+    );
   });
 });
 
@@ -274,14 +268,12 @@ describe('ignoring actions', () => {
       {
         todoId: '0',
         text: 'test',
-        completed: false,
-        isBeingEdited: false
+        completed: false
       },
       {
         todoId: '1',
         text: 'test',
-        completed: false,
-        isBeingEdited: false
+        completed: false
       }
     ];
 
@@ -291,27 +283,9 @@ describe('ignoring actions', () => {
       type: String(Math.random()),
       todoId: '0',
       text: 'test-text-value',
-      completed: true,
-      isBeingEdited: false
+      completed: true
     };
 
     expect(todos(stateBefore, action)).toEqual(stateBefore);
-  });
-
-  test("'editing' flag is not modified when true", () => {
-    const stateBefore = [
-      {
-        todoId: 'test-uuid',
-        text: 'test-text',
-        completed: true,
-        isBeingEdited: true
-      }
-    ];
-
-    deepFreeze(stateBefore);
-
-    expect(todos(stateBefore, setEditingFlag('test-uuid'))).toEqual(
-      stateBefore
-    );
   });
 });
