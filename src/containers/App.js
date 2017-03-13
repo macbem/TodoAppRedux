@@ -4,7 +4,13 @@ import { connect } from 'react-redux';
 import TodoList from '../components/TodoList';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
+import {
+  AppWrapperElement,
+  injectGlobalStyles
+} from '../styled-components';
 import * as actions from '../actions';
+
+injectGlobalStyles();
 
 class App extends Component {
   todosLeft = () =>
@@ -13,34 +19,33 @@ class App extends Component {
       0
     );
 
-  renderFooter = () => {
+  renderMainAppSection = () => {
     if (this.props.todos.length > 0) {
       return (
-        <Footer
-          filter={this.props.filter}
-          switchFilter={this.props.actions.switchFilter}
-          todos={this.props.todos}
-          todosLeft={this.todosLeft()}
-          clearCompleted={this.props.actions.clearCompletedTodos}
-        />
+        <div>
+          <TodoList
+            filter={this.props.filter}
+            todos={this.props.todos}
+            actions={this.props.actions}
+          />
+          <Footer
+            filter={this.props.filter}
+            switchFilter={this.props.actions.switchFilter}
+            todos={this.props.todos}
+            todosLeft={this.todosLeft()}
+            clearCompleted={this.props.actions.clearCompletedTodos}
+          />
+        </div>
       );
     }
   };
 
   render() {
     return (
-      <div>
-        <Header
-          addTodo={this.props.actions.addTodo}
-          finishAllTodos={this.props.actions.finishAllTodos}
-        />
-        <TodoList
-          filter={this.props.filter}
-          todos={this.props.todos}
-          actions={this.props.actions}
-        />
-        {this.renderFooter()}
-      </div>
+      <AppWrapperElement>
+        <Header addTodo={this.props.actions.addTodo} />
+        {this.renderMainAppSection()}
+      </AppWrapperElement>
     );
   }
 }

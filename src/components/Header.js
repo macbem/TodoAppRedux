@@ -1,15 +1,15 @@
 import React, { PropTypes } from 'react';
 import TodoInput from './TodoInput';
+import { Title, AppHeader } from '../styled-components';
 
 const Header = ({ finishAllTodos, addTodo }) => (
-  <div>
-    <button onClick={finishAllTodos}>Mark all as done</button>
+  <AppHeader>
+    <Title>todos</Title>
     <TodoInput newTodoInput={true} text="" saveTodo={addTodo} />
-  </div>
+  </AppHeader>
 );
 
 Header.PropTypes = {
-  finishAllTodos: PropTypes.func.isRequired,
   addTodo: PropTypes.func.isRequired
 };
 

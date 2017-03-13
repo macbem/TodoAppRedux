@@ -1,13 +1,18 @@
 import React, { PropTypes, Component } from 'react';
+import {
+  FooterContainer,
+  ClearCompletedButton,
+  TodoCount
+} from '../styled-components';
 import Filters from './Filters';
 
 export default class Footer extends Component {
   renderClearCompletedButton = completedTodosCount => {
     if (completedTodosCount > 0) {
       return (
-        <button onClick={this.props.clearCompleted}>
+        <ClearCompletedButton onClick={this.props.clearCompleted}>
           Clear completed
-        </button>
+        </ClearCompletedButton>
       );
     }
   };
@@ -21,13 +26,13 @@ export default class Footer extends Component {
     const completedTodosCount = this.props.todos.length - todosLeft;
 
     return (
-      <div>
-        <span>
+      <FooterContainer>
+        <TodoCount>
           {`${todosLeft} item${todosLeft === 1 ? '' : 's'} left`}
-        </span>
+        </TodoCount>
         <Filters filter={filter} switchFilter={switchFilter} />
         {this.renderClearCompletedButton(completedTodosCount)}
-      </div>
+      </FooterContainer>
     );
   }
 }

@@ -1,4 +1,9 @@
 import React, { PropTypes } from 'react';
+import {
+  ToggleAllButton,
+  TodoItemList,
+  MainAppSection
+} from '../styled-components';
 import TodoItem from './TodoItem';
 
 const TodoList = ({ todos, actions, filter }) => {
@@ -17,18 +22,23 @@ const TodoList = ({ todos, actions, filter }) => {
 
   const filteredTodos = todos.filter(todoFilter);
 
+  const { finishAllTodos } = actions;
+
   return (
-    <ul>
-      {filteredTodos.map(todo => (
-        <TodoItem
-          key={todo.todoId}
-          toggleCompleted={actions.toggleTodo}
-          editTodo={actions.editTodo}
-          removeTodo={actions.removeTodo}
-          {...todo}
-        />
-      ))}
-    </ul>
+    <MainAppSection>
+      <ToggleAllButton onClick={finishAllTodos} />
+      <TodoItemList>
+        {filteredTodos.map(todo => (
+          <TodoItem
+            key={todo.todoId}
+            toggleCompleted={actions.toggleTodo}
+            editTodo={actions.editTodo}
+            removeTodo={actions.removeTodo}
+            {...todo}
+          />
+        ))}
+      </TodoItemList>
+    </MainAppSection>
   );
 };
 
@@ -39,7 +49,8 @@ TodoList.propTypes = {
       completed: PropTypes.bool.isRequired,
       text: PropTypes.string.isRequired
     }).isRequired
-  ).isRequired
+  ).isRequired,
+  actions: PropTypes.object.isRequired
 };
 
 export default TodoList;

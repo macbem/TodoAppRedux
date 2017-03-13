@@ -1,10 +1,9 @@
 import React from 'react';
 import Link from '../components/Link';
+import { FiltersContainer } from '../styled-components';
 
 const Filters = ({ switchFilter, filter }) => (
-  <div>
-    Show:
-    {' '}
+  <FiltersContainer>
     <Link
       switchFilter={switchFilter}
       ownFilter="SHOW_ALL"
@@ -12,7 +11,6 @@ const Filters = ({ switchFilter, filter }) => (
     >
       All
     </Link>
-    {', '}
     <Link
       switchFilter={switchFilter}
       ownFilter="SHOW_ACTIVE"
@@ -20,7 +18,6 @@ const Filters = ({ switchFilter, filter }) => (
     >
       Active
     </Link>
-    {', '}
     <Link
       switchFilter={switchFilter}
       ownFilter="SHOW_COMPLETED"
@@ -28,7 +25,7 @@ const Filters = ({ switchFilter, filter }) => (
     >
       Completed
     </Link>
-  </div>
+  </FiltersContainer>
 );
 
 export default Filters;

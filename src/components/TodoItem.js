@@ -1,4 +1,11 @@
 import React, { PropTypes, Component } from 'react';
+import {
+  TodoItemIdle,
+  TodoCheckbox,
+  TodoTextLabel,
+  TodoRemoveButton,
+  TodoItemEditing
+} from '../styled-components';
 import TodoInput from './TodoInput';
 
 export default class TodoItem extends Component {
@@ -27,28 +34,32 @@ export default class TodoItem extends Component {
 
     if (!this.state.isBeingEdited) {
       return (
-        <li>
-          <i
-            onClick={() => toggleCompleted(todoId)}
-            className={
-              `fa ${completed ? 'fa-check-circle' : 'fa-circle-o'}`
-            }
+        <TodoItemIdle>
+          <TodoCheckbox
+            type="checkbox"
+            onChange={() => toggleCompleted(todoId)}
+            checked={completed ? true : false}
           />
-          <span onDoubleClick={this.handleDoubleClick}>{text}</span>
-          <button onClick={() => removeTodo(todoId)}>
-            Remove
-          </button>
-        </li>
+          <TodoTextLabel
+            completed={completed}
+            onDoubleClick={this.handleDoubleClick}
+          >
+            {text}
+          </TodoTextLabel>
+          <TodoRemoveButton onClick={() => removeTodo(todoId)} />
+        </TodoItemIdle>
       );
     } else {
       return (
-        <li>
+        <TodoItemEditing>
           <TodoInput
             saveTodo={this.handleTodoEdit}
             abortEditing={this.abortEditing}
+            removeTodo={removeTodo}
+            todoId={todoId}
             text={text}
           />
-        </li>
+        </TodoItemEditing>
       );
     }
   }

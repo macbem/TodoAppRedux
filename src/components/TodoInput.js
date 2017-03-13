@@ -1,6 +1,7 @@
 import React, { PropTypes, Component } from 'react';
+import { TodoInputElement } from '../styled-components';
 
-export default class TodoItem extends Component {
+export default class TodoInput extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -24,9 +25,14 @@ export default class TodoItem extends Component {
   handleKeydown = evt => {
     if (evt.keyCode === 13) {
       const text = evt.target.value.trim();
-      this.props.saveTodo(text);
       if (this.props.newTodoInput) {
-        this.setState({ text: '' });
+        if (text.length) {
+          this.props.saveTodo(text);
+          this.setState({ text: '' });
+        }
+      } else {
+        if (text.length) this.props.saveTodo(text);
+        else this.props.removeTodo(this.props.todoId);
       }
     } else if (evt.keyCode === 27 && !this.props.newTodoInput) {
       this.props.abortEditing();
@@ -35,8 +41,9 @@ export default class TodoItem extends Component {
   };
 
   render() {
+    const { newTodoInput } = this.props;
     return (
-      <input
+      <TodoInputElement
         type="text"
         value={this.state.text}
         placeholder="What needs to be done?"
@@ -44,12 +51,13 @@ export default class TodoItem extends Component {
         onKeyDown={this.handleKeydown}
         onChange={this.handleChange}
         autoFocus
+        newTodoInput={newTodoInput}
       />
     );
   }
 }
 
-TodoItem.propTypes = {
+TodoInput.propTypes = {
   text: PropTypes.string.isRequired,
   saveTodo: PropTypes.func.isRequired,
   abortEditing: PropTypes.func,
