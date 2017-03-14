@@ -1,6 +1,6 @@
 This is a simple to-do app with React & Redux, quite similar to the TodoMVC spec in terms of raw functionality.
 
-This project includes unit tests written in Jest.js.
+This project includes unit tests written in Jest.js, mostly for the reducers thus far.
 
 To run this project, simply use `yarn install && yarn start`. If you want to run the tests, just use `yarn run test` after the initial setup.
 
