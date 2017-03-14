@@ -1,4 +1,17 @@
-const todos = (state = [], action) => {
+const initialState = [
+  {
+    todoId: '44c57d20-f0c7-4b50-b8bd-d6d632891030',
+    text: 'Learn Redux',
+    completed: true
+  },
+  {
+    todoId: 'a4c49934-d041-489f-8acb-d21bbf12f107',
+    text: 'Learn React',
+    completed: true
+  }
+];
+
+const todos = (state = initialState, action) => {
   switch (action.type) {
     case 'ADD_TODO':
       return [

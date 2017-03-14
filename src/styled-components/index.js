@@ -261,6 +261,7 @@ export const TodoInputElement = styled.input`
   box-shadow: inset 0 -2px 1px rgba(0,0,0,0.03);` : `
     display: block;
     width: 506px;
+    max-width: calc(100% - 44px);
     padding: 12px 16px;
     margin: 0 0 0 43px;`}
 `;
